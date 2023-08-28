@@ -1,5 +1,5 @@
 import {Link} from "react-router-dom";
-import Image from "./Image.jsx";
+import Image from "../pages/Image.jsx";
 
 export default function PlaceComponent({place}) {
   return (

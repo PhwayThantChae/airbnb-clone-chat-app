@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import Header from "../Header";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import PlaceComponent from "../PlaceComponent";
+import PlaceComponent from "../pages/PlaceComponent";
 
 export default function SearchInPage() {
   const ulocation = useLocation();
@@ -38,7 +38,7 @@ export default function SearchInPage() {
   }
 
   return (
-      <div className="py-4 px-8 flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen px-8 py-4">
         <Header />
         {places.length > 0 ? (
             <div className="grid grid-cols-2 mt-8 gap-x-6 gap-y-8 md:grid-cols-3 lg:grid-cols-4">
@@ -49,7 +49,7 @@ export default function SearchInPage() {
         ) : (
             <div className="flex flex-col items-center justify-center mt-8">
               <img src="nosearch2.png" alt="No search results" />
-              <button onClick={reloadPage} className="bg-transparent text-primary underline">Try refresh!</button>
+              <button onClick={reloadPage} className="underline bg-transparent text-primary">Try refresh!</button>
             </div>
         )}
       </div>

@@ -1,9 +1,9 @@
-import AccountNav from "../AccountNav";
+import AccountNav from "../pages/AccountNav";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import PlaceImg from "./PlaceImg";
 import { Link } from "react-router-dom";
-import BookingDates from "../BookingDates";
+import BookingDates from "../pages/BookingDates";
 import { UserContext } from "../UserContext";
 import AdminNav from "../admin-pages/AdminNav";
 import Header from "../Header";
@@ -107,7 +107,7 @@ export default function BookingsPage() {
               </Link>
               {!!user && user.userType === "admin" && (
                 <button
-                  className="absolute text-primary top-2 right-2 bg-transparent me-2 mt-2 "
+                  className="absolute mt-2 bg-transparent text-primary top-2 right-2 me-2 "
                   onClick={(e) => {
                     e.stopPropagation();
                     handleDeleteBooking(booking._id);

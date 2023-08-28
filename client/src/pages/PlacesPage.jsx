@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import AccountNav from "../AccountNav";
+import AccountNav from "../pages/AccountNav";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import PlaceImg from "./PlaceImg";
@@ -98,7 +98,7 @@ export default function PlacesPage() {
               </Link>
               {!!user && user.userType === "admin" && (
                 <button
-                  className="absolute text-primary top-2 right-2 bg-transparent mt-2 me-2"
+                  className="absolute mt-2 bg-transparent text-primary top-2 right-2 me-2"
                   onClick={(e) => {
                     e.stopPropagation();
                     handleDeletePlace(place._id);

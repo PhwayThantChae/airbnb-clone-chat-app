@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 import PlaceComponent from "./PlaceComponent";
-import Image from "./Image";
+import Image from "../pages/Image";
 import { toast } from 'react-toastify';
 
 export default function Profile({setRedirect, setUser, user}) {

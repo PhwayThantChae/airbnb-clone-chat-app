@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import PlaceComponent from "../PlaceComponent";
+import PlaceComponent from "../pages/PlaceComponent";
 import Header from "../Header";
 
 export default function IndexPage() {
@@ -11,7 +11,7 @@ export default function IndexPage() {
     });
   }, []);
   return (
-      <div className="py-4 px-8 flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen px-8 py-4">
         <Header/>
         <div
             className="grid grid-cols-2 mt-8 gap-x-6 gap-y-8 md:grid-cols-3 lg:grid-cols-4">

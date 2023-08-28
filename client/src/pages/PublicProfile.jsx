@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 import axios from "axios";
 import PlaceComponent from "./PlaceComponent";
 import Image from "./Image";
-import Header from "./Header";
+import Header from "../Header";
 
 export default function PublicProfile() {
   const {id} = useParams();

@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {Link, Navigate} from "react-router-dom";
 import {UserContext} from "./UserContext";
-import Image from "./Image.jsx";
+import Image from "./pages/Image.jsx";
 import logo from '../public/pocket.svg';
 import { toast } from 'react-toastify';
 

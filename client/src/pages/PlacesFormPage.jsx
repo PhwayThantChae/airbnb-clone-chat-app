@@ -1,8 +1,8 @@
-import PhotosUploader from "../PhotosUploader";
-import Perks from "../Perks";
+import PhotosUploader from "../pages/PhotosUploader";
+import Perks from "../pages/Perks";
 import {useContext, useEffect, useState} from "react";
 import axios from "axios";
-import AccountNav from "../AccountNav";
+import AccountNav from "../pages/AccountNav";
 import {Navigate, useParams} from "react-router-dom";
 import {UserContext} from "../UserContext";
 import Header from "../Header";

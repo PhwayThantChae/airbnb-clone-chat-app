@@ -2,8 +2,8 @@ import {useContext, useState} from "react";
 import {UserContext} from "../UserContext";
 import {Navigate, useNavigate, useParams} from "react-router-dom";
 import PlacesPage from "./PlacesPage";
-import AccountNav from "../AccountNav";
-import Profile from "../Profile";
+import AccountNav from "../pages/AccountNav";
+import Profile from "../pages/Profile";
 import Header from "../Header";
 import AdminNav from "../admin-pages/AdminNav";
 

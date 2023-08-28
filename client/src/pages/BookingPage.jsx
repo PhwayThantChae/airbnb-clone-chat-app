@@ -1,10 +1,10 @@
 import {Navigate, useParams} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
 import axios from "axios";
-import AddressLink from "../AddressLink";
+import AddressLink from "../pages/AddressLink";
 import {UserContext} from "../UserContext";
-import PlaceGallery from "../PlaceGallery";
-import BookingDates from "../BookingDates";
+import PlaceGallery from "../pages/PlaceGallery";
+import BookingDates from "../pages/BookingDates";
 import Header from "../Header";
 
 export default function BookingPage() {
