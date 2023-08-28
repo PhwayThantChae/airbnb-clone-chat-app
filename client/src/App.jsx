@@ -1,5 +1,6 @@
 import './App.css'
 import {Route, Routes} from "react-router-dom";
+import 'react-toastify/dist/ReactToastify.css';
 import IndexPage from "./pages/IndexPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -22,6 +23,7 @@ import EditUserPage from './admin-pages/EditUserPage';
 import SearchInPage from "./pages/SearchInPage";
 import NewOwnerPage from './admin-pages/NewOwnerPage';
 import EditOwnerPage from './admin-pages/EditOwnerPage';
+import { ToastContainer } from 'react-toastify';
 
 axios.defaults.baseURL = "http://localhost:4000";
 axios.defaults.withCredentials = true;
@@ -101,6 +103,9 @@ function App() {
               }
           />
         </Routes>
+        <div>
+          <ToastContainer/>
+        </div>
       </UserContextProvider>
   )
 }

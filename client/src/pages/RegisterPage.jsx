@@ -3,6 +3,7 @@ import {useState, useContext} from "react";
 import axios from "axios";
 import Header from "../Header";
 import {UserContext} from "../UserContext.jsx";
+import { toast } from 'react-toastify';
 
 export default function RegisterPage() {
   //   const [redirect, setRedirect] = useState(null);
@@ -51,7 +52,9 @@ export default function RegisterPage() {
       //   alert("Registration successful. Now you can log in");
     } catch (e) {
       //    setRegistrationError(true);
-      alert("Registration failed. Please try again later");
+      toast.error('Registration failed. Please try again later.', {
+        position: toast.POSITION.TOP_CENTER
+      });
     }
   }
 

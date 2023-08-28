@@ -3,6 +3,7 @@ import {Link, Navigate} from "react-router-dom";
 import {UserContext} from "./UserContext";
 import Image from "./Image.jsx";
 import logo from '../public/pocket.svg';
+import { toast } from 'react-toastify';
 
 export default function Header() {
   const {user} = useContext(UserContext);
@@ -31,7 +32,9 @@ export default function Header() {
     if (selectedCheckIn >= today) {
       setCheckIn(selectedCheckIn);
     } else {
-      alert("Check-in date cannot be from the past");
+      toast.error('Check-in date cannot be from the past', {
+        position: toast.POSITION.TOP_CENTER
+      });
     }
   };
 
@@ -40,7 +43,9 @@ export default function Header() {
     if (checkIn < selectedCheckOut) {
       setCheckOut(selectedCheckOut);
     } else {
-      alert("Check-out date cannot be before the check-in date");
+      toast.error('Check-out date cannot be before the check-in date', {
+        position: toast.POSITION.TOP_CENTER
+      });
     }
   };
 

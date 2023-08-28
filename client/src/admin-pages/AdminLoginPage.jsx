@@ -3,6 +3,7 @@ import {useContext, useState} from "react";
 import axios from "axios";
 import {UserContext} from "../UserContext.jsx";
 import Header from "../Header.jsx";
+import { toast } from 'react-toastify';
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState("");
@@ -15,10 +16,14 @@ export default function AdminLoginPage() {
     try {
       const {data} = await axios.post(`/a/login`, {email, password});
       setUser(data);
-      alert("Login successful");
+      toast.success('Success Notification !', {
+        position: toast.POSITION.TOP_CENTER
+      });
       setRedirect(true);
     } catch (e) {
-      alert("Login failed");
+      toast.error('Login Failed', {
+        position: toast.POSITION.TOP_CENTER
+      });
     }
   }
 

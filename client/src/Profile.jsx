@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import PlaceComponent from "./PlaceComponent";
 import Image from "./Image";
+import { toast } from 'react-toastify';
 
 export default function Profile({setRedirect, setUser, user}) {
   const [name, setName] = useState("");
@@ -63,7 +64,9 @@ export default function Profile({setRedirect, setUser, user}) {
       logout();
     } catch (e) {
       console.log(e);
-      alert("Update profile failed");
+      toast.error('Update profile failed', {
+        position: toast.POSITION.TOP_CENTER
+      });
     }
   }
 
