@@ -39,6 +39,7 @@ export default function Profile({setRedirect, setUser, user}) {
       const {data: image} = response;
       console.log(image);
       setProfileImg(image);
+      user.profileImg = image;
     });
   }
 
