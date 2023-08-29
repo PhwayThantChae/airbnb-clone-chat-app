@@ -30,3 +30,11 @@ button.secondary {
   width: auto;
   padding: 0.5rem 1rem;
 }
+
+.custom-chatbox-height {
+  height: calc(100vh - 200px);
+}
+
+.chatBoxTop, .chatMenuWrapper {
+  height: calc(100vh - 350px);
+}
