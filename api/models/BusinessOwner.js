@@ -11,7 +11,7 @@ const BusinessOwnerSchema = new Schema({
   businessWebsite: String,
   userType: String,
   profileImg: String
-});
+}, { timestamps: true });
 
 const BusinessOwnerModel = mongoose.model('BusinessOwner', BusinessOwnerSchema);
 

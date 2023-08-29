@@ -7,7 +7,7 @@ const AdminSchema = new Schema({
   password: String,
   userType: String,
   profileImg: String
-});
+}, { timestamps: true });
 
 const AdminModel = mongoose.model('Admin', AdminSchema);
 
