@@ -1,18 +1,48 @@
 import AccountNav from "../AccountNav";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { UserContext } from "../../UserContext";
 import Header from "../../Header";
 import AdminNav from "../../admin-pages/AdminNav";
 import Conversation from "./Conversation";
 import Message from "./Message";
+import {io} from "socket.io-client";
 
 export default function ChatListPage() {
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const socket = useRef();
   const { user } = useContext(UserContext);
+  const scrollRef = useRef();
+
+  useEffect(() => {
+    socket.current = io("ws://localhost:8900");
+    socket.current.on("getMessage", (data) => {
+      setArrivalMessage({
+        sender: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    arrivalMessage &&
+      currentChat?.members.includes(arrivalMessage.sender) &&
+      setMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage, currentChat]);
+
+  useEffect(() => {
+    if (user && user._id) {
+      socket.current.emit("addUser", user._id);
+      socket.current.on("getUsers", users => {
+          console.log(users);
+      });
+    }
+  }, [user]);
 
   useEffect(() => {
     const getConversations = async () => {
@@ -46,6 +76,14 @@ export default function ChatListPage() {
         conversationId: currentChat._id
     }
 
+    const receiverId = currentChat.members.find(member => member !== user._id)
+
+    socket.current.emit("sendMessage", {
+        senderId: user._id,
+        receiverId,
+        text: newMessage,
+    });
+
     try {
         const res = await axios.post("/api/messages", message);
         setMessages([...messages, res.data]);
@@ -54,6 +92,12 @@ export default function ChatListPage() {
         console.log(e);
     }
   }
+
+
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({behavior: "smooth"})
+  }, [messages])
 
   return (
     <div className="flex flex-col px-8 py-4">
@@ -84,7 +128,9 @@ export default function ChatListPage() {
                 <>
                   <div className="space-y-4 overflow-y-auto chatBoxTop h-100">
                     {messages.map((m) => (
-                        <Message key={m._id} message={m} own={m.sender === user._id} />
+                        <div key={m._id} ref={scrollRef}>
+                            <Message message={m} own={m.sender === user._id} />
+                        </div>
                     ))}
                     
                   </div>

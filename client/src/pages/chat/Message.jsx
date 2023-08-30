@@ -1,7 +1,6 @@
 import { format } from "timeago.js";
 
 export default function Message({ message, own }) {
-  console.log(own);
   return (
     <>
     <div className={`flex flex-col ${own ? "justify-end items-end" : "justify-start"}`}>
