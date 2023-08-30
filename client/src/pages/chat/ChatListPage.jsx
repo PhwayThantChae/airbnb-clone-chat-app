@@ -11,6 +11,7 @@ export default function ChatListPage() {
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
   const { user } = useContext(UserContext);
 
   useEffect(() => {
@@ -37,7 +38,21 @@ export default function ChatListPage() {
     getMessages();
   }, [currentChat]);
 
-  console.log(messages);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const message = {
+        sender: user._id, 
+        text: newMessage,
+        conversationId: currentChat._id
+    }
+
+    try {
+        const res = await axios.post("/api/messages", message);
+        setMessages([...messages, res.data]);
+    } catch(e) {
+        console.log(e);
+    }
+  }
 
   return (
     <div className="flex flex-col px-8 py-4">
@@ -77,8 +92,10 @@ export default function ChatListPage() {
                       type="text"
                       className="flex-grow p-2 border rounded-l-lg"
                       placeholder="Type your message..."
+                      onChange={(e) => setNewMessage(e.target.value)}
+                      value = {newMessage}
                     />
-                    <button className="px-4 ml-4 text-white rounded-lg bg-primary">
+                    <button className="px-4 ml-4 text-white rounded-lg bg-primary" onClick={handleSubmit}>
                       Send
                     </button>
                   </div>
