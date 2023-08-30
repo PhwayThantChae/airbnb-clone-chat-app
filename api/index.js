@@ -11,6 +11,11 @@ const BusinessOwner = require("./models/BusinessOwner");
 const cookieParser = require("cookie-parser");
 const imageDownloader = require("image-downloader");
 const {S3Client, PutObjectCommand} = require('@aws-sdk/client-s3');
+
+// Routes
+const conversationRoute = require("./routes/conversations");
+const messageRoute = require("./routes/messages");
+
 const multer = require("multer");
 const fs = require("fs");
 const mime = require('mime-types');
@@ -19,8 +24,8 @@ require("dotenv").config();
 const app = express();
 const photosMiddleware = multer({dest:'/tmp'});
 const bcryptSalt = bcrypt.genSaltSync(12);
-const jwtSecret = "djfnrkjvbwc";
-const bucket = 'airbnb-clone-uploads';
+const jwtSecret = process.env.JWT_SECRET;
+const bucket = process.env.BUCKET;
 mongoose.connect(process.env.MONGO_URL);
 
 app.use(express.json());
@@ -936,5 +941,25 @@ app.get("/search/api/details", async (req, res) => {
     console.error(error);
   }
 });
+
+app.get("/api/users/:id", async (req, res) => {
+  if (req.params.id) {
+      let result = await BusinessOwner.findById(req.params.id);
+      if(!result) {
+        result = await User.findById(req.params.id);
+      }
+      res.json({
+        _id: result._id,
+        name: result.name,
+        profileImg: result.profileImg
+      });
+  } else {
+    res.json(null);
+  }
+});
+
+app.use("/api/conversations", conversationRoute);
+app.use("/api/messages", messageRoute);
+
 
 app.listen(4000);
