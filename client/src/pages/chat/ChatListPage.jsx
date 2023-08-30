@@ -49,6 +49,7 @@ export default function ChatListPage() {
     try {
         const res = await axios.post("/api/messages", message);
         setMessages([...messages, res.data]);
+        setNewMessage("");
     } catch(e) {
         console.log(e);
     }
