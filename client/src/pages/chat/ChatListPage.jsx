@@ -18,29 +18,60 @@ export default function ChatListPage() {
   const { user } = useContext(UserContext);
   const scrollRef = useRef();
 
+
+
   useEffect(() => {
-    socket.current = io("ws://localhost:8900");
-    socket.current.on("getMessage", (data) => {
-      setArrivalMessage({
-        sender: data.senderId,
-        text: data.text,
-        createdAt: Date.now(),
-      });
-    });
+    // if (user && user._id) {
+      socket.current = io("ws://localhost:8900");
+      console.log(`Connecting socket...`);
+  
+      // return () => {
+      //   // Unsubscribe or remove socket event listeners
+      //   console.log('unmount');
+      //   socket.current.off("getMessage");
+      //   socket.current.off("getUsers");
+      // };
+    // }
   }, []);
 
   useEffect(() => {
-    arrivalMessage &&
-      currentChat?.members.includes(arrivalMessage.sender) &&
+    if (socket.current) {
+      socket.current.on("getMessage", (data) => {
+        console.log(data);
+        console.log("get message socket");
+        setArrivalMessage({
+          sender: data.senderId,
+          text: data.text,
+          createdAt: Date.now(),
+        });
+      });
+
+      return () => {
+        console.log("socket disconnecting");
+        socket.current.disconnect();
+      }
+    }
+  }, [])
+
+  useEffect(() => {  
+    if (
+      arrivalMessage &&
+      currentChat?.members.includes(arrivalMessage.sender)
+    ) {
       setMessages((prev) => [...prev, arrivalMessage]);
+    }
   }, [arrivalMessage, currentChat]);
 
   useEffect(() => {
     if (user && user._id) {
       socket.current.emit("addUser", user._id);
-      socket.current.on("getUsers", users => {
-          console.log(users);
-      });
+      // socket.current.on("getUsers", users => {
+      //     console.log(users);
+      // });
+
+      // return () => {
+      //   socket.current.off("getUsers");
+      // };
     }
   }, [user]);
 
@@ -76,17 +107,15 @@ export default function ChatListPage() {
         conversationId: currentChat._id
     }
 
-    const receiverId = currentChat.members.find(member => member !== user._id)
-
-    socket.current.emit("sendMessage", {
-        senderId: user._id,
-        receiverId,
-        text: newMessage,
-    });
-
     try {
         const res = await axios.post("/api/messages", message);
         setMessages([...messages, res.data]);
+        const receiverId = currentChat.members.find(member => member !== user._id)
+        socket.current.emit("sendMessage", {
+            senderId: user._id,
+            receiverId,
+            text: newMessage,
+        });
         setNewMessage("");
     } catch(e) {
         console.log(e);
