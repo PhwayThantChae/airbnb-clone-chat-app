@@ -10,7 +10,25 @@ router.post("/", async (req, res) => {
   });
 
   try {
-    const savedConversation = await newConversation.save();
+    const query = {
+      $or: [
+        { members: [req.body.senderId, req.body.receiverId] },
+        { members: [req.body.receiverId, req.body.senderId] }
+      ]
+    };
+
+    const update = {
+      $setOnInsert: {
+        members: [req.body.senderId, req.body.receiverId]
+      }
+    };
+
+    const options = {
+      upsert: true,
+      new: true
+    };
+
+    const savedConversation = await Conversation.findOneAndUpdate(query, update, options);
     res.status(200).json(savedConversation);
   } catch (err) {
     res.status(500).json(err);
