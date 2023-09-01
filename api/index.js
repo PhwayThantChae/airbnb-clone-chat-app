@@ -15,6 +15,7 @@ const {S3Client, PutObjectCommand} = require('@aws-sdk/client-s3');
 // Routes
 const conversationRoute = require("./routes/conversations");
 const messageRoute = require("./routes/messages");
+const reviewRoute = require("./routes/reviews");
 
 const multer = require("multer");
 const fs = require("fs");
@@ -960,6 +961,7 @@ app.get("/api/users/:id", async (req, res) => {
 
 app.use("/api/conversations", conversationRoute);
 app.use("/api/messages", messageRoute);
+app.use("/api/reviews", reviewRoute);
 
 
 app.listen(4000);
