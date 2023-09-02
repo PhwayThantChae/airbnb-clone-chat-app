@@ -7,6 +7,7 @@ import AddressLink from "./AddressLink";
 import Header from "../Header";
 import Perks from "./Perks";
 import ReviewForm from "./review/ReviewForm";
+import Review from './review/Review';
 
 export default function PlacePage() {
   const { id } = useParams();
@@ -14,6 +15,18 @@ export default function PlacePage() {
   const [redirect, setRedirect] = useState("");
   const [perks, setPerks] = useState([]);
   const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    const getReviews = async () => {
+      try {
+        const res = await axios.get("/api/reviews/" + id);
+        setReviews(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getReviews();
+  }, [id]);
 
   useEffect(() => {
     if (!id) {
@@ -27,6 +40,21 @@ export default function PlacePage() {
 
   if (!place) {
     return "";
+  }
+
+  async function submitReview(content) {
+    if(content) {
+      try {
+        const response = await axios.post("/api/reviews", {
+          place: id,
+          content: content
+        });
+        console.log(response.data);
+        setReviews([...reviews, response.data]);
+      } catch(err) {
+        console.log(err);
+      }
+    }
   }
 
   function returnToIndex() {
@@ -100,18 +128,17 @@ export default function PlacePage() {
         </div>
       </div>
       <div className="mt-4 mb-8 gap-8 grid grid-cols-1 md:grid-cols-[2fr_1fr]">
-        <div className="p-4 bg-blue-200">
+        <div className="">
+        <h2 className="mb-4 text-2xl font-semibold">Reviews</h2>
         {reviews.map((review, index) => (
-        <Review
-          key={index}
-          author={review.author}
-          rating={review.rating}
-          content={review.content}
-          date={review.date}
-        />
+          <Review
+            key={index}
+            review={review}
+          /> )
+        )}
         </div>
         <div className="">
-          <ReviewForm />
+          <ReviewForm placeId={id} submitReview={submitReview} />
         </div>
       </div>
     </div>

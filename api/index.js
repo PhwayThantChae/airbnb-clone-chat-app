@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -21,7 +22,6 @@ const multer = require("multer");
 const fs = require("fs");
 const mime = require('mime-types');
 const axios = require("axios");
-require("dotenv").config();
 const app = express();
 const photosMiddleware = multer({dest:'/tmp'});
 const bcryptSalt = bcrypt.genSaltSync(12);

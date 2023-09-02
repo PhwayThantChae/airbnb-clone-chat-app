@@ -1,9 +1,10 @@
 const router = require("express").Router();
 const Message = require("../models/Message");
+const authMiddleware = require("./auth");
 
 //add
 
-router.post("/", async (req, res) => {
+router.post("/", authMiddleware, async (req, res) => {
   const newMessage = new Message(req.body);
 
   try {
@@ -16,7 +17,7 @@ router.post("/", async (req, res) => {
 
 //get
 
-router.get("/:conversationId", async (req, res) => {
+router.get("/:conversationId", authMiddleware, async (req, res) => {
   try {
     const messages = await Message.find({
       conversationId: req.params.conversationId,

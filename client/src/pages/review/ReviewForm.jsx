@@ -1,21 +1,20 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
-const ReviewForm = ( ) => {
+const ReviewForm = ({placeId, submitReview}) => {
   const [content, setContent] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Create a new review object
-    const newReview = {
-      content
-    };
-
-    // Clear the form fields
-    setContent('');
-
-    // Pass the new review to the parent component for submission
-    // onSubmit(newReview);
+    if(content) {
+      try {
+        submitReview(content);
+        setContent('');
+      } catch(err) {
+        console.log(err);
+      }
+    }
   };
 
   return (
