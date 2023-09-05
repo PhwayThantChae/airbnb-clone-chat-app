@@ -15,7 +15,7 @@ const Review = ({ review }) => {
         <div className="flex-shrink-0">
           <img
             className="object-cover w-10 h-10 rounded-full"
-            src={`${review.user.profileImg}`}
+            src={`${review.user?.profileImg}`}
           />
         </div>
         <div className="ml-3">

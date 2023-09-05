@@ -50,14 +50,14 @@ export default function PlaceGallery({place}) {
           <div className="grid ">
             {place.photos?.[1] && (
                 <img onClick={() => setShowAllPhotos(true)}
-                     className="object-cover cursor-pointer aspect-square"
+                     className="object-cover w-full cursor-pointer aspect-square"
                      src={place.photos[1]}
                      alt=""/>
             )}
             <div className="overflow-hidden">
               {place.photos?.[2] && (
                   <img onClick={() => setShowAllPhotos(true)}
-                       className="relative object-cover cursor-pointer aspect-square top-2"
+                       className="relative object-cover w-full cursor-pointer aspect-square top-2"
                        src={place.photos[2]}
                        alt=""/>
               )}
