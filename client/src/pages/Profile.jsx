@@ -250,7 +250,7 @@ export default function Profile({setRedirect, setUser, user}) {
             </div>
           </div>
         </form>
-        {user && user.userType === "business" && (
+        {/* {user && user.userType === "business" && (
             <>
               <hr/>
               <h2 className="mt-6 text-2xl text-center">My places</h2>
@@ -262,7 +262,7 @@ export default function Profile({setRedirect, setUser, user}) {
                     ))}
               </div>
             </>
-        )}
+        )} */}
       </div>
   );
 }

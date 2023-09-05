@@ -1,5 +1,5 @@
 import { Link, Navigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import BookingWidget from "./BookingWidget";
 import PlaceGallery from "../pages/PlaceGallery";
@@ -8,10 +8,12 @@ import Header from "../Header";
 import Perks from "./Perks";
 import ReviewForm from "./review/ReviewForm";
 import Review from './review/Review';
+import {UserContext} from "../UserContext";
 
 export default function PlacePage() {
   const { id } = useParams();
   const [place, setPlace] = useState(null);
+  const {user} = useContext(UserContext);
   const [redirect, setRedirect] = useState("");
   const [perks, setPerks] = useState([]);
   const [reviews, setReviews] = useState([]);
@@ -129,16 +131,23 @@ export default function PlacePage() {
       </div>
       <div className="mt-4 mb-8 gap-8 grid grid-cols-1 md:grid-cols-[2fr_1fr]">
         <div className="">
-        <h2 className="mb-4 text-2xl font-semibold">Reviews</h2>
-        {reviews.map((review, index) => (
-          <Review
-            key={index}
-            review={review}
-          /> )
-        )}
+          <h2 className="mb-4 text-2xl font-semibold">Reviews</h2>
+          {reviews.length > 0 ? (
+            reviews.map((review, index) => (
+              <Review
+                key={index}
+                review={review}
+              /> )
+            )
+          ) : (
+            <span className="flex items-center justify-center p-10 font-medium text-center text-gray-400 border-2 rounded-lg shadow-sm ">No reviews yet.</span>
+          )}
+
         </div>
         <div className="">
+        {user && user.userType === 'user' && (
           <ReviewForm placeId={id} submitReview={submitReview} />
+        )}
         </div>
       </div>
     </div>
