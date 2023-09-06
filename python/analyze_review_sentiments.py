@@ -81,18 +81,3 @@ for place_id, label in review_sentiment_labels.items():
 
 
 mongo_client.close()
-
-
-
-
-
-# for polarity, subjectivity in sentiment_scores:
-#     if polarity > 0:
-#         sentiment_labels.append("positive")
-#     elif polarity < 0:
-#         sentiment_labels.append("negative")
-#     else:
-#         sentiment_labels.append("neutral")
-
-# print(sentiment_scores)
-# print(sentiment_labels)
