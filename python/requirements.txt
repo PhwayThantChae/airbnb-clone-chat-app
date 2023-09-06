@@ -1,3 +1,5 @@
 requests
 pymongo
 pandas
+textblob
+nltk
